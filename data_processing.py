@@ -28,7 +28,26 @@ ax.set_xlabel("t [s]")
 ax.grid(True)
 fig.savefig(os.path.join(fig_path, "signal.pdf"), format="pdf")
 
-# Computing mean and variance of the sample
+# Computing sample mean as a function of t
+
+y_mean = np.zeros_like(t)
+y_sum = 0
+
+for i, dt in enumerate(t):
+    y_sum += y[i]
+    if dt == 0:
+        y_mean[i] = y_sum
+    else:
+        y_mean[i] = y_sum / dt
+
+fig, ax = plt.subplots()
+ax.plot(t, y_mean, color="black")
+ax.set_ylabel(r"$\overline{y}(t)$")
+ax.set_xlabel("t [s]")
+ax.grid(True)
+fig.savefig(os.path.join(fig_path, "mean_vs_time.pdf"), format="pdf")
+
+plt.show()
 
 y_mean = np.mean(y)
 y_var = np.var(y)
