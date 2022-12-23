@@ -47,7 +47,9 @@ ax.set_xlabel("t [s]")
 ax.grid(True)
 fig.savefig(os.path.join(fig_path, "mean_vs_time.pdf"), format="pdf")
 
-plt.show()
+
+# After seeing that mean is constant (at least at high t) we compute mean 
+# and variance by using numpy methods
 
 y_mean = np.mean(y)
 y_var = np.var(y)
@@ -77,7 +79,9 @@ fig.savefig(os.path.join(fig_path, "normalized_signal.pdf"), format="pdf")
 # Computing 2-points autocorrelation with scipy.signal.correlate, as suggested in
 # https://numpy.org/doc/stable/reference/generated/numpy.correlate.html. This
 # function uses FFT to perform fast computation, as direct calculation is not
-# time-sustainable. Why we select only that part of the output?
+# time-sustainable. We select the second half of the array to have the t > 0
+# autocorrelation (see 
+# https://stackoverflow.com/questions/643699/how-can-i-use-numpy-correlate-to-do-autocorrelation)
 
 acf = correlate(y, y, mode="full", method="auto")[(len(y) - 1) :]
 
