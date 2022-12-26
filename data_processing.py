@@ -9,7 +9,7 @@ import h5py
 data_path = os.path.join(os.path.dirname(__file__), "data")
 fig_path = os.path.join(os.path.dirname(__file__), "figures")
 
-# Data loading using numpy arrays from txt file
+# Data loading using numpy arrays
 
 y = np.loadtxt(os.path.join(data_path, "H-H1_GWOSC_4KHZ_R1-1126257415-4096.txt"))
 
