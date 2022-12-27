@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
-from scipy.interpolate import UnivariateSpline
 
 from path import data_path, fig_path
 from mean import columns
