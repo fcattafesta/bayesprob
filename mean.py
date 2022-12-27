@@ -4,11 +4,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
 from scipy.interpolate import UnivariateSpline
-from processing import data_path, fig_path
+from path import data_path, fig_path
 
 # Reading dataset
 
 columns=["y", "t", "acf"]
+columns.append("y_norm")
 
 f = h5py.File(os.path.join(data_path, "post_data.hdf5"), "r")
 df = pd.DataFrame(f.get("H-H1_GWOSC_4KHZ_R1-1126257415-4096"), columns=columns)

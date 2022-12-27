@@ -4,10 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import correlate
 import h5py
+from path import data_path, fig_path
 
-# Defining data/ path and loading data using numpy arrays
-
-data_path = os.path.join(os.path.dirname(__file__), "data")
 
 y = np.loadtxt(os.path.join(data_path, "H-H1_GWOSC_4KHZ_R1-1126257415-4096.txt"))
 
@@ -21,10 +19,6 @@ t = np.arange(len(y))
 TIME = 4096  # seconds
 t = t / TIME
 df["t"] = t
-
-# Defining figure/ path
-
-fig_path = os.path.join(os.path.dirname(__file__), "figures")
 
 # Plotting sample for visualization
 
