@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import h5py
 from scipy.fft import rfft, rfftfreq
 from utils.dataset import data_path, fig_path, get_df
-from utils.masks import alternate_mask
 
 # Reading dataset
 
