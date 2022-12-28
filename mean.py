@@ -4,16 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
 from scipy.interpolate import UnivariateSpline
-from path import data_path, fig_path
+from utils.dataset import data_path, fig_path, get_df, write_data
 
 # Reading dataset
 
-columns=["y", "t", "acf"]
-columns.append("y_norm")
-
-f = h5py.File(os.path.join(data_path, "post_data.hdf5"), "r")
-df = pd.DataFrame(f.get("H-H1_GWOSC_4KHZ_R1-1126257415-4096"), columns=columns)
-f.close()
+df = get_df()
 
 # First of all, we want to compute the mean of the process as a function of time.
 
@@ -41,7 +36,4 @@ df["y_norm"] = y - np.mean(y)
 
 # Writing on file
 
-f = h5py.File(os.path.join(data_path, "post_data.hdf5"), "w")
-f.create_dataset("H-H1_GWOSC_4KHZ_R1-1126257415-4096", data=df)
-f.close()
-
+write_data(df)

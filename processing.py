@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import correlate
 import h5py
-from path import data_path, fig_path
+from utils.dataset import data_path, fig_path, write_data
 
 
 y = np.loadtxt(os.path.join(data_path, "H-H1_GWOSC_4KHZ_R1-1126257415-4096.txt"))
@@ -43,6 +43,4 @@ df["acf"] = acf
 
 # Saving samples and ACF for further analysis
 
-f = h5py.File(os.path.join(data_path, "post_data.hdf5"), "w")
-f.create_dataset("H-H1_GWOSC_4KHZ_R1-1126257415-4096", data=df)
-f.close()
+write_data(df)

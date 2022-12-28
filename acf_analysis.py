@@ -3,15 +3,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
-
-from path import data_path, fig_path
-from mean import columns
+from utils.dataset import data_path, fig_path, get_df
 
 # Reading dataset
 
-f = h5py.File(os.path.join(data_path, "post_data.hdf5"), "r")
-df = pd.DataFrame(f.get("H-H1_GWOSC_4KHZ_R1-1126257415-4096"), columns=columns)
-f.close()
+df = get_df()
 
 # Normalzing ACF
 
