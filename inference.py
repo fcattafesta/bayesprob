@@ -26,17 +26,12 @@ q = np.arange(0.5, 1., step=0.05)
 x, y = np.meshgrid(M, q)
 log_pr = np.log(prior(x, y))
 
-filtered = matched_filter(psd, f, 25, 0.7) * df["fft_y"]
 
+fft_y = df["fft_y"].values
 
-fig, ax = plt.subplots()
-ax.set_ylabel("")
-ax.set_xlabel("")
-ax.grid(True, ls="--", alpha=0.5)
-ax.minorticks_on()
-ax.tick_params(direction="in", which="both")
-ax.plot(f, np.real(df["fft_y"]), color="black", linewidth=0.5)
-ax.plot(f[1:], np.real(filtered[1:]), color="red", linewidth=0.5)
-ax.set_xscale("log")
-ax.set_xlim(1, 1000)
-fig.savefig(os.path.join(fig_path, "filtered_y.pdf"), format="pdf")
+filter_shape = matched_filter(10, 10, x, y).shape
+
+filtered = np.empty((f.size, *filter_shape), dtype=np.float16)
+print(filtered.shape)
+
+# for freq, val in zip(f, fft_y, psd):
