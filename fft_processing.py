@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
 from scipy.fft import rfft, rfftfreq
-from utils.dataset import data_path, fig_path, get_df
+from utils.dataset import data_path, fig_path, get_df, write_data
 
 # Reading dataset
 
@@ -17,6 +17,11 @@ df = get_df()
 
 acf = df["acf"].values
 psd = rfft(acf)
+
+# Same for sample data
+
+y_norm = df["y_norm"].values
+fft_y = rfft(y_norm)
 
 # Computing sample spacing and the corresponding sample frequences
 
@@ -37,3 +42,9 @@ ax.plot(f, np.absolute(psd), color="black", linewidth=0.5)
 ax.set_xscale("log")
 ax.set_yscale("log")
 fig.savefig(os.path.join(fig_path, "psd.pdf"), format="pdf")
+
+df = pd.DataFrame()
+df["f"] = f
+df["psd"] = psd
+df["fft_y"] = fft_y
+write_data(df, filename="fft_data.hdf5")
