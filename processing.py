@@ -2,8 +2,6 @@ import os
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from scipy.signal import correlate
-import h5py
 from utils.dataset import data_path, fig_path, write_data
 
 
@@ -30,16 +28,6 @@ ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
 ax.plot(t, y, color="black", linewidth=0.08)
 fig.savefig(os.path.join(fig_path, "signal.pdf"), format="pdf")
-
-# Computing 2-points autocorrelation with scipy.signal.correlate, as suggested in
-# https://numpy.org/doc/stable/reference/generated/numpy.correlate.html. This
-# function uses FFT to perform fast computation, as direct calculation is not
-# time-sustainable. We select the second half of the array to have the t > 0
-# autocorrelation (see
-# https://stackoverflow.com/questions/643699/how-can-i-use-numpy-correlate-to-do-autocorrelation)
-
-acf = correlate(y, y, mode="full", method="auto")[(len(y) - 1) :]
-df["acf"] = acf
 
 # Saving samples and ACF for further analysis
 
