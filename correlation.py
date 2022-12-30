@@ -4,30 +4,30 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import h5py
 
-from path import data_path, fig_path
-from mean import columns
+from utils.dataset import get_df, fig_path
 
-f = h5py.File(os.path.join(data_path, "post_data.hdf5"), "r")
-df = pd.DataFrame(f.get("H-H1_GWOSC_4KHZ_R1-1126257415-4096"), columns=columns)
-f.close()
+df = get_df()
 
-def mask(arr):
-    m = np.zeros_like(arr, dtype=bool)
-    for i, elm in enumerate(arr):
-        if i % 10000 == 0:
-            m[i] = 1
-    return m
+x = df["y_norm"].values
 
-y_norm = df["y_norm"].values
-y_var = np.var(y_norm)
-m = mask(y_norm)
-y_norm = y_norm[:1000]
-n = len(y_norm)
-r = np.ones((n, n))
+x_var = np.var(x)
+
+n = 10000
+n_idx = int(x.size / n)
+
+d = np.empty((n, n_idx))
 
 for i in range(n):
-    for j in range(n):
-        r[i, j] = np.mean(y_norm[i] * y_norm[j]) / y_var
+    start = i * n_idx
+    stop = (i + 1) * n_idx
+    d[i, :] = x[start:stop]
+
+r = np.empty((n_idx, n_idx), dtype=np.float16)
+
+for i in range(n_idx):
+    for j in range(n_idx):
+        r[i, j] = np.mean(d[:, i] * d[:, j]) / x_var
+
 
 fig, ax = plt.subplots()
 c = ax.imshow(r)

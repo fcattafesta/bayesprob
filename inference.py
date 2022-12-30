@@ -34,4 +34,5 @@ filter_shape = matched_filter(10, 10, x, y).shape
 filtered = np.empty((f.size, *filter_shape), dtype=np.float16)
 print(filtered.shape)
 
-# for freq, val in zip(f, fft_y, psd):
+for i in range(f.size):
+    filtered[i, :, :] = matched_filter(psd[i], f[i], x, y) * fft_y[i]
