@@ -7,7 +7,7 @@ from utils.dataset import data_path, fig_path, get_df, write_data
 
 # Reading dataset
 
-columns = ["y", "t"]
+columns = ["y", "t", "acf"]
 
 df = get_df(columns=columns)
 t = df["t"].values
@@ -26,7 +26,7 @@ acf = correlate(y, y, mode="full", method="auto")[(len(y) - 1) :]
 # Normalzing ACF
 
 y_var = np.var(y)
-acf = acf / (y * len(y))
+acf = acf / (y_var * len(y))
 df["acf"] = acf
 
 # Plot of ACF_norm

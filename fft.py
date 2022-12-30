@@ -41,7 +41,7 @@ ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
 ax.plot(f, np.absolute(psd), color="black", linewidth=0.5)
 ax.set_xscale("log")
-#ax.set_yscale("log")
+ax.set_yscale("log")
 fig.savefig(os.path.join(fig_path, "psd.pdf"), format="pdf")
 
 # Data FFT
@@ -54,7 +54,6 @@ ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
 ax.plot(f, np.real(y_fft), color="black", linewidth=0.5)
 ax.set_xscale("log")
-# ax.set_yscale("log")
 fig.savefig(os.path.join(fig_path, "y_fft.pdf"), format="pdf")
 
 # Write data
