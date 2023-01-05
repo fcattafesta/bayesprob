@@ -7,7 +7,7 @@ from utils.dataset import data_path, fig_path, get_df, write_data
 
 # Reading dataset
 
-columns = ["y", "t", "acf"]
+columns = ["y", "t"]
 
 df = get_df(columns=columns)
 t = df["t"].values

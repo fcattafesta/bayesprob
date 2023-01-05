@@ -6,6 +6,8 @@ from utils.dataset import data_path, fig_path, write_data
 
 
 y = np.loadtxt(os.path.join(data_path, "H-H1_GWOSC_4KHZ_R1-1126257415-4096.txt"))
+cut = int(8e6)
+y = y[cut:(len(y) - cut)]
 
 # Using pandas DataFrame to create dataset
 

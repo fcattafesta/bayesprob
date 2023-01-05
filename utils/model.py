@@ -16,6 +16,8 @@ def TaylorF2(f, M, q):
 def matched_filter(S, f, M, q):
     return TaylorF2(f, M, q) / np.sqrt(S)
 
+def log_likelihood(y_fft, f, M, q, S):
+    return - 0.5 * (y_fft - np.real(TaylorF2(f, M, q)))**2 / S
 
 if __name__ == "__main__":
 
