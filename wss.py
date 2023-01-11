@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.signal import correlate
+from scipy.fft import rfft, rfftfreq
 from utils.dataset import get_df, fig_path
 
 # Reading dataset
@@ -18,6 +19,7 @@ n = int(t[-1] / dt)
 n_idx = int(y.size / n)
 
 acf = np.empty((n, n_idx))
+psd = np.empty((n, int(n_idx/2)+1))
 act = np.empty(n)
 tt = t[:n_idx]
 
@@ -27,12 +29,14 @@ for i in range(n):
     x = y[start:stop]
     acf[i, :] = correlate(x, x, mode="full", method="auto")[x.size - 1 :] / (np.var(x) * x.size)
     act[i] = t[np.where(np.abs(acf[i, :]) < 0.01)[0][0]]
+    psd[i, :] = np.absolute(rfft(acf[i, :]))
 
+f = rfftfreq(acf.shape[1], d = t[1]-t[0])
 
 
 fig, ax = plt.subplots()
 ax.set_ylabel("ACF")
-ax.set_xlabel("t [s]")
+ax.set_xlabel("$\Delta t$ [s]")
 ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
@@ -42,6 +46,19 @@ ax.plot(tt, acf[2, :], color="blue", linewidth=0.5)
 fig.savefig(os.path.join(fig_path, "wss_acf.pdf"), format="pdf")
 
 fig, ax = plt.subplots()
+ax.set_ylabel("PSD")
+ax.set_xlabel("f [Hz]")
+ax.grid(True, ls="--", alpha=0.5)
+ax.minorticks_on()
+ax.tick_params(direction="in", which="both")
+ax.plot(f, psd[0, :], color="black", linewidth=0.5)
+ax.plot(f, psd[4, :], color="red", linewidth=0.5)
+ax.plot(f, psd[8, :], color="blue", linewidth=0.5)
+ax.set_xscale("log")
+ax.set_yscale("log")
+fig.savefig(os.path.join(fig_path, "wss_psd.pdf"), format="pdf")
+
+fig, ax = plt.subplots()
 ax.set_ylabel("ACT [s]")
 ax.set_xlabel("n")
 ax.grid(True, ls="--", alpha=0.5)
@@ -49,3 +66,4 @@ ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
 ax.scatter(np.arange(0, n), act, color="black", linewidth=0.5, marker=".")
 fig.savefig(os.path.join(fig_path, "act.pdf"), format="pdf")
+

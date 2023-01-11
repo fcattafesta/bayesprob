@@ -6,7 +6,7 @@ from utils.dataset import data_path, fig_path, write_data
 
 
 y = np.loadtxt(os.path.join(data_path, "H-H1_GWOSC_4KHZ_R1-1126257415-4096.txt"))
-cut = int(8e6)
+cut = 0
 y = y[cut:(len(y) - cut)]
 
 # Using pandas DataFrame to create dataset
@@ -28,8 +28,8 @@ ax.set_xlabel("t [s]")
 ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
-ax.plot(t, y, color="black", linewidth=0.08)
-fig.savefig(os.path.join(fig_path, "signal.pdf"), format="pdf")
+ax.plot(t[:100], y[:100], color="black", linewidth=0.08)
+fig.savefig(os.path.join(fig_path, "signal_zoom.pdf"), format="pdf")
 
 # Saving samples and ACF for further analysis
 

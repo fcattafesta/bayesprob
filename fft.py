@@ -52,7 +52,7 @@ ax.set_xlabel("Hz")
 ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
-ax.plot(f, np.real(y_fft), color="black", linewidth=0.5)
+ax.plot(f, np.absolute(y_fft), color="black", linewidth=0.5)
 ax.set_xscale("log")
 fig.savefig(os.path.join(fig_path, "y_fft.pdf"), format="pdf")
 
@@ -60,6 +60,6 @@ fig.savefig(os.path.join(fig_path, "y_fft.pdf"), format="pdf")
 
 df = pd.DataFrame()
 df["f"] = f
-df["y_fft"] = np.real(y_fft)
+df["y_fft"] = y_fft
 df["psd"] = np.absolute(psd)
 write_data(df, filename="fft_data.hdf5")

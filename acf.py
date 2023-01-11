@@ -7,7 +7,7 @@ from utils.dataset import data_path, fig_path, get_df, write_data
 
 # Reading dataset
 
-columns = ["y", "t"]
+columns = ["y", "t", "acf"]
 
 df = get_df(columns=columns)
 t = df["t"].values
@@ -29,11 +29,14 @@ y_var = np.var(y)
 acf = acf / (y_var * len(y))
 df["acf"] = acf
 
+act = t[np.where(np.abs(acf) < 0.01)[0][0]]
+print(act)
+
 # Plot of ACF_norm
 
 fig, ax = plt.subplots()
 ax.set_ylabel("ACF")
-ax.set_xlabel("t [s]")
+ax.set_xlabel("$\Delta t$ [s]")
 ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
@@ -44,11 +47,11 @@ fig.savefig(os.path.join(fig_path, "acf.pdf"), format="pdf")
 
 fig, ax = plt.subplots()
 ax.set_ylabel("ACF")
-ax.set_xlabel("t [s]")
+ax.set_xlabel("$\Delta t$ [s]")
 ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
-ax.plot(t[:10000], acf[:10000], color="black", linewidth=0.5)
+ax.plot(t[:1000], acf[:1000], color="black", linewidth=0.5)
 fig.savefig(os.path.join(fig_path, "acf_zoom.pdf"), format="pdf")
 
 write_data(df)
