@@ -40,8 +40,9 @@ ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
 ax.plot(f, np.absolute(psd), color="black", linewidth=0.5)
-ax.set_xscale("log")
+#ax.set_xscale("log")
 ax.set_yscale("log")
+ax.set_xlim(10, 2000)
 fig.savefig(os.path.join(fig_path, "psd.pdf"), format="pdf")
 
 # Data FFT
@@ -53,7 +54,9 @@ ax.grid(True, ls="--", alpha=0.5)
 ax.minorticks_on()
 ax.tick_params(direction="in", which="both")
 ax.plot(f, np.absolute(y_fft), color="black", linewidth=0.5)
-ax.set_xscale("log")
+#ax.set_xscale("log")
+ax.set_xlim(10, 2000)
+ax.set_yscale("log")
 fig.savefig(os.path.join(fig_path, "y_fft.pdf"), format="pdf")
 
 # Write data
