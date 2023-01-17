@@ -128,11 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Lectures material
-lectures/
 
 # Data
 data/
 
-# Exam material
-exam/
