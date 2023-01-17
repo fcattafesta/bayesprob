@@ -10,8 +10,8 @@ from utils.dataset import data_path, fig_path, get_df, write_data
 columns = ["y", "t", "acf"]
 
 df = get_df(columns=columns)
-acf = df["acf"].values
 y = df["y"].values
+acf = df["acf"].values * (np.var(y) * y.size)
 t = df["t"].values
 
 # In order to compute likelihood function, we need Power Spectral Density, 
@@ -64,5 +64,6 @@ fig.savefig(os.path.join(fig_path, "y_fft.pdf"), format="pdf")
 df = pd.DataFrame()
 df["f"] = f
 df["y_fft"] = y_fft
-df["psd"] = np.absolute(psd)
+df["psd"] = psd
+print(psd)
 write_data(df, filename="fft_data.hdf5")

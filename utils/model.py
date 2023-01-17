@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 def TaylorF2(f, M, q):
     A = 1e-20 # np.power(M, (5./6))
-    t_c = 1126259462 - 2048
+    t_c = 2000
     nu = q / (1+q)**2
     m_tot = M * np.power(nu, (-3./5))
     v = np.power(np.pi * m_tot * f, (1./3))

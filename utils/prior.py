@@ -19,7 +19,7 @@ if __name__ == "__main__":
     log_pr = np.log(pr)
 
     fig, ax = plt.subplots()
-    c = ax.contourf(x, y, pr)
+    c = ax.contourf(x, y, pr, levels=100)
     ax.set_ylabel("q")
     ax.set_xlabel("$\mathcal{M}$ [$M_\odot$]")
     b = fig.colorbar(c)
